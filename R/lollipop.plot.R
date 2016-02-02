@@ -100,10 +100,10 @@ lolliplot <- function(SNP.gr, features=NULL, ranges=NULL,
         gap <- .2 * lineH
         bottomblank <- 4
         if(length(names(feature))>0){
-            sW <- max(as.numeric(convertX(stringWidth(names(feature)), "line"))) + 3
+            sW <- max(as.numeric(convertX(stringWidth(unique(names(feature))), "line"))) + 3
             ncol <- floor(as.numeric(convertX(unit(1, "npc"), "line")) / 
                               sW / as.numeric(convertX(stringWidth("W"), "line")))
-            bottomblank <- max(ceiling(length(names(feature)) / ncol), 4)
+            bottomblank <- max(ceiling(length(unique(names(feature))) / ncol), 4)
             pushViewport(viewport(x=.5, y=bottomblank*lineH/2, 
                                   width=1,
                                   height=bottomblank*lineH,
@@ -114,10 +114,10 @@ lolliplot <- function(SNP.gr, features=NULL, ranges=NULL,
                 unlist(feature$fill) else "black"
             pch <- if(length(unlist(feature$pch))==length(feature)) 
                 unlist(feature$pch) else 22
-            grid.legend(label=names(feature), ncol=ncol,
+            grid.legend(label=unique(names(feature)), ncol=ncol,
                       byrow=TRUE, vgap=unit(.2, "lines"),
-                      pch=pch,
-                      gp=gpar(col=color, fill=fill))
+                      pch=unique(pch),
+                      gp=gpar(col=unique(color), fill=unique(fill)))
             popViewport()
         }
         pushViewport(viewport(x=lineW + .5, y= (bottomblank+2)*lineH/2 + .5, 
